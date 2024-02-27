@@ -210,6 +210,14 @@ resource "null_resource" "quotes_provision" {
     source = "${path.module}/provision-quotes.sh"
     destination = "/home/ec2-user/provision.sh"
   }
+  provisioner "file" {
+    source      = "/home/cloudshell-user/AWS_IAAC_Challenge/docker/quotes/Dockerfile"
+    destination = "/home/ec2-user/Dockerfile"
+  }
+  provisioner "file" {
+    source      = "/home/cloudshell-user/AWS_IAAC_Challenge/docker/quotes/quotes.jar"
+    destination = "/home/ec2-user/quotes.jar"
+  }
   provisioner "remote-exec" {
     inline = [
       "chmod +x /home/ec2-user/provision.sh",
@@ -300,6 +308,14 @@ resource "null_resource" "newsfeed_provision" {
     source = "${path.module}/provision-newsfeed.sh"
     destination = "/home/ec2-user/provision.sh"
   }
+  provisioner "file" {
+    source      = "/home/cloudshell-user/AWS_IAAC_Challenge/docker/newsfeed/Dockerfile"
+    destination = "/home/ec2-user/Dockerfile"
+  }
+  provisioner "file" {
+    source      = "/home/cloudshell-user/AWS_IAAC_Challenge/docker/newsfeed/newsfeed.jar"
+    destination = "/home/ec2-user/newsfeed.jar"
+  }
   provisioner "remote-exec" {
     inline = [
       "chmod +x /home/ec2-user/provision.sh",
@@ -318,6 +334,14 @@ resource "null_resource" "front_end_provision" {
   provisioner "file" {
     source = "${path.module}/provision-front_end.sh"
     destination = "/home/ec2-user/provision.sh"
+  }
+  provisioner "file" {
+    source      = "/home/cloudshell-user/AWS_IAAC_Challenge/docker/front-end/Dockerfile"
+    destination = "/home/ec2-user/Dockerfile"
+  }
+  provisioner "file" {
+    source      = "/home/cloudshell-user/AWS_IAAC_Challenge/docker/front-end/front-end.jar"
+    destination = "/home/ec2-user/front-end.jar"
   }
   provisioner "remote-exec" {
     inline = [

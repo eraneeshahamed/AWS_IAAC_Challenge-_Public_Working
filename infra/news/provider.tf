@@ -8,9 +8,9 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket = "news4321-terraform-infra-na"
+    bucket = "news4421-terraform-infra-na"
     region = "us-east-1"
-    dynamodb_table = "news4321-terraform-locks"
+    dynamodb_table = "news4421-terraform-locks"
     key = "news/terraform.tfstate"
   }
 }

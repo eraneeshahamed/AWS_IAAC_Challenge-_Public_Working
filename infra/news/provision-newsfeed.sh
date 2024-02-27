@@ -12,9 +12,13 @@ echo "Provisioning docker image $DOCKER_IMAGE"
 docker stop newsfeed || true
 docker rm newsfeed || true
 
-eval $(aws ecr get-login --region us-east-1 --no-include-email)
+docker build -t news4421-newsfeed -f Dockerfile .
 
-docker pull $DOCKER_IMAGE
+docker tag news4421-newsfeed:latest 339713031268.dkr.ecr.us-east-1.amazonaws.com/news4421-newsfeed:latest
+
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 339713031268.dkr.ecr.us-east-1.amazonaws.com
+
+docker push 339713031268.dkr.ecr.us-east-1.amazonaws.com/news4421-newsfeed:latest
 
 docker run -d \
   --name newsfeed \

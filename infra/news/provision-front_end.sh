@@ -1,5 +1,4 @@
 #!/bin/bash -e
-
 while [[ $# -gt 0 ]]
 do
 key="$1"
@@ -38,9 +37,14 @@ echo "Provisioning docker image $DOCKER_IMAGE"
 docker stop front_end || true
 docker rm front_end || true
 
-eval $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
 
-docker pull $DOCKER_IMAGE
+docker build -t news4421-front_end -f Dockerfile .
+
+docker tag news4421-front_end:latest 339713031268.dkr.ecr.us-east-1.amazonaws.com/news4421-front_end:latest
+
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 339713031268.dkr.ecr.us-east-1.amazonaws.com
+
+docker push 339713031268.dkr.ecr.us-east-1.amazonaws.com/news4421-front_end:latest
 
 NEWSFEED_SECRET_TOKEN="T1&eWbYXNWG1w1^YGKDPxAWJ@^et^&kX"
 

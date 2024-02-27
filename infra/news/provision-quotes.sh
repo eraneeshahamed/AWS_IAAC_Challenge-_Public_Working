@@ -12,9 +12,13 @@ echo "Provisioning docker image $DOCKER_IMAGE"
 docker stop quotes || true
 docker rm quotes || true
 
-eval $(aws ecr get-login --region us-east-1 --no-include-email)
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 339713031268.dkr.ecr.us-east-1.amazonaws.com
 
-docker pull $DOCKER_IMAGE
+docker build -t news4421-quotes -f Dockerfile .
+
+docker tag news4421-quotes:latest 339713031268.dkr.ecr.us-east-1.amazonaws.com/news4421-quotes:latest
+
+docker push 339713031268.dkr.ecr.us-east-1.amazonaws.com/news4421-quotes:latest
 
 docker run -d \
   --name quotes \
