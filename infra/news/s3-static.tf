@@ -1,6 +1,6 @@
 resource "aws_s3_bucket" "news" {
   bucket = "${var.prefix}-terraform-infra-static-pages"
-  acl    = "public-read"
+  acl    = "private"
   force_destroy = true
 
   website {
