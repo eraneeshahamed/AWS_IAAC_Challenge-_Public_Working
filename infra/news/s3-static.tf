@@ -9,29 +9,11 @@ resource "aws_s3_bucket" "news" {
   }
 }
 
-resource "aws_s3_bucket_policy" "news" {
+resource "aws_s3_bucket_public_access_block" "news" {
   bucket = "${aws_s3_bucket.news.id}"
 
-  policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Id": "newsBucketPolicy",
-  "Statement": [
-    {
-      "Sid":"PublicReadGetObject",
-      "Effect":"Allow",
-      "Principal": "*",
-      "Action":["s3:GetObject"],
-      "Resource":["${aws_s3_bucket.news.arn}/*"]
-    },
-    {
-      "Sid": "AllowBucketAccess",
-      "Effect": "Allow",
-      "Principal": "*",
-      "Action": "s3:ListBucket",
-      "Resource": "${aws_s3_bucket.news.arn}"
-    }
-  ]
-}
-POLICY
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }
